@@ -40,7 +40,7 @@ def train_model(X, y):
     scaler = StandardScaler()
     X_train_scaled = scaler.fit_transform(X_train)
 
-    # Choose final model (RandomForest is reliable and robust)
+    # final model is Random Forest with 200 estimators, 5 sample split, 2 samples leaf and a max depth of 20
     model = RandomForestClassifier(n_estimators=300, random_state=42)
 
     # Train model
