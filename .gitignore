@@ -1,0 +1,8 @@
+model.pkl
+scaler.pkl
+features.pkl
+*.pkl
+*.pickle
+
+__pycache__/
+*.pyc
