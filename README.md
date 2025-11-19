@@ -16,6 +16,15 @@ It includes:
 * Pickled model artifacts
 
 ---
+
+Exploratory Data Analysis has been conducted in the notebook.ipynb file. Additionally, it contains:
+
+* Data Cleaning
+* Model Selection and Hyperparameter Tuning
+* Feature Importance
+
+
+---
 ## Instructions:
 
 ## 1. Clone the repository:
@@ -55,14 +64,7 @@ This will generate:
 ```bash
 python predict.py
 ```
-
 ---
-
-## 5. Interact with the service: Use the curl.py script to send a POST request to the prediction service:
-
-```bash
-python curl.py
-```
 
 ## 5. Run the FastAPI App Locally
 
@@ -79,6 +81,14 @@ Use the POST `/predict` endpoint.
 
 ---
 
+## 6. Interact with the service: 
+
+Run the curl.py script in a separate terminal to send a POST request to the prediction service
+
+```bash
+python curl.py
+```
+
 ## 6. Build & Run the Docker Image
 
 ### **Build the image**
@@ -90,7 +100,7 @@ docker build -t occupancy-api .
 ###  **Run the container**
 
 ```bash
-docker run -p 8000:8005 occupancy-api
+docker run -p 8000:8000 occupancy-api
 ```
 
 API will be available at:
