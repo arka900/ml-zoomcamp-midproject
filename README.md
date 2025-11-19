@@ -120,6 +120,8 @@ It lives on at (http://ml-zoomcamp-midproject-production.up.railway.app).
 
 ![screenshot](https://github.com/arka900/ml-zoomcamp-midproject/blob/main/screenshots/Screenshot.png)
 
+---
 
+Rather than providing a full-fledged analysis, this project serves as a simplified demonstration of a machine learning workflow, focusing on fulfilling the course requirements.
 
 
