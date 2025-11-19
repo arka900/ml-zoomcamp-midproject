@@ -1,6 +1,3 @@
-Here’s a clean, professional **README.md template** tailored exactly for your project and matching the style of the repo you linked — but **much better organized** and specific to *your occupancy detection project*.
-
-You can copy-paste this directly into your README.md.
 
 ---
 
