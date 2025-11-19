@@ -42,20 +42,15 @@ def home():
 
 @app.post("/predict")
 def predict(data: SensorData):
-    """
-    Predict occupancy using sensor data
-    
-    - **Temperature**: Temperature in Celsius
-    - **Humidity**: Humidity percentage
-    - **Light**: Light intensity
-    - **CO2**: CO2 level in ppm
-    - **HumidityRatio**: Humidity ratio
-    """
-    # Convert Pydantic model to dict
-    input_dict = data.dict()
-    
+
+    input_dict = data.dict()   # This is already correct
+
+    # Create df for debugging or logging (optional)
     df = pd.DataFrame([input_dict])
-    X = preprocess_input(df, features, scaler)
+
+    # FIX: pass dictionary, not df
+    X = preprocess_input(input_dict, features, scaler)
+
     pred = make_prediction(model, X)
 
     return {
@@ -64,7 +59,8 @@ def predict(data: SensorData):
         "occupancy": "Occupied" if pred[0] == 1 else "Not Occupied"
     }
 
+
 # Add this to run directly
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="127.0.0.1", port=8005)
