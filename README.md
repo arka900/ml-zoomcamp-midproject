@@ -118,6 +118,8 @@ I have used railway.app (http://railway.app) to host the docker file.
 
 It lives on at (http://ml-zoomcamp-midproject-production.up.railway.app).
 
+![screenshot](https://github.com/arka900/ml-zoomcamp-midproject/blob/main/screenshots/Screenshot.png)
 
-![screenshot](screenshots\Screenshot.png)
+
+
 
