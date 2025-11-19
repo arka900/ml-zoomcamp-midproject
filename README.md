@@ -33,7 +33,7 @@ git clone <repository-url>
 cd <repository-directory>
 ```
 
-## 2. Create the Conda Environment (if done locally)
+## 2. Create the virtual environment using conda along with the necessary libraries (if done locally)
 
 ```bash
 conda env create -f environment.yaml
@@ -111,4 +111,13 @@ http://127.0.0.1:8000/docs
 ```
 
 ---
+
+### 7. Cloud Deployment
+
+I have used railway.app (http://railway.app) to host the docker file. 
+
+It lives on at (ml-zoomcamp-midproject-production.up.railway.app).
+
+
+![screenshot](D:\ml-zoomcamp-midproject\screenshots\Screenshot 2025-11-20 015449.png)
 
