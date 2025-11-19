@@ -5,6 +5,8 @@
 
 This project predicts whether a room is **occupied** based on environmental sensor readings such as temperature, humidity, CO₂ levels, and light intensity.
 
+The dataset has been fetched from UCI Machine Learning Repository and is automatically downloaded within the script.
+
 It includes:
 
 * A full **machine learning pipeline**
@@ -14,41 +16,30 @@ It includes:
 * Pickled model artifacts
 
 ---
+## Instructions:
 
-## 📁 Project Structure
-
+## 1. Clone the repository:
 ```
-ml-zoomcamp-midproject/
-│
-├── preprocess.py          # Training & preprocessing pipeline
-├── predict.py             # Load model + return predictions
-├── main.py                # FastAPI app
-├── environment.yaml       # Conda environment
-├── features.pkl           # Feature order for prediction
-├── model.pkl              # Trained ML model
-├── scaler.pkl             # StandardScaler
-├── Dockerfile             # Containerization
-├── test_data.json         # Sample payload
-└── README.md
+git clone <repository-url>
+cd <repository-directory>
 ```
 
----
-
-## 📦 1. Create the Conda Environment
+## 2. Create the Conda Environment (if done locally)
 
 ```bash
 conda env create -f environment.yaml
 conda activate midproject
 ```
+```bash
+pip install -r requirements.txt
+```
 
 ---
 
-## 🧠 2. Train the Model (Optional)
-
-If you want to retrain the model:
+## 3. Train the Model (Locally)
 
 ```bash
-python preprocess.py
+python train.py
 ```
 
 This will generate:
@@ -57,41 +48,23 @@ This will generate:
 * `scaler.pkl`
 * `features.pkl`
 
-These files are **ignored by Git** using `.gitignore`:
-
-```
-*.pkl
-```
-
 ---
 
-## 🔮 3. Make Predictions Locally
-
-You can test prediction directly in Python:
+## 4. Run the Prediction Service
 
 ```bash
 python predict.py
 ```
 
-Or import the function:
-
-```python
-from predict import predict
-
-sample = {
-    "Temperature": 23.5,
-    "Humidity": 27.2,
-    "Light": 450,
-    "CO2": 950,
-    "HumidityRatio": 0.004
-}
-
-print(predict(sample))
-```
-
 ---
 
-## ⚡ 4. Run the FastAPI App Locally
+## 5. Interact with the service: Use the curl.py script to send a POST request to the prediction service:
+
+```bash
+python curl.py
+```
+
+## 5. Run the FastAPI App Locally
 
 ```bash
 uvicorn main:app --reload
@@ -106,7 +79,7 @@ Use the POST `/predict` endpoint.
 
 ---
 
-## 🐳 5. Build & Run the Docker Image
+## 6. Build & Run the Docker Image
 
 ### **Build the image**
 
@@ -114,10 +87,10 @@ Use the POST `/predict` endpoint.
 docker build -t occupancy-api .
 ```
 
-### **Run the container**
+###  **Run the container**
 
 ```bash
-docker run -p 8000:8000 occupancy-api
+docker run -p 8000:8005 occupancy-api
 ```
 
 API will be available at:
@@ -129,24 +102,3 @@ http://127.0.0.1:8000/docs
 
 ---
 
-## 🧪 6. Example API Payload
-
-`test_data.json`:
-
-```json
-{
-  "Temperature": 23.5,
-  "Humidity": 27.2,
-  "Light": 450,
-  "CO2": 950,
-  "HumidityRatio": 0.004
-}
-```
-
-Use with curl:
-
-```bash
-curl -X POST http://127.0.0.1:8000/predict \
-     -H "Content-Type: application/json" \
-     -d @test_data.json
-```

@@ -1,12 +1,15 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-import joblib
-import numpy as np
-import pandas as pd
-from preprocess import preprocess_input
-from predicttest import make_prediction
+from predict import predict   
 
-# Define input data model
+# FastAPI app
+app = FastAPI(
+    title="Occupancy Detection API",
+    description="Predicts occupancy using sensor data",
+    version="1.0"
+)
+
+# Input schema
 class SensorData(BaseModel):
     Temperature: float
     Humidity: float
@@ -15,7 +18,7 @@ class SensorData(BaseModel):
     HumidityRatio: float
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "Temperature": 23.1,
                 "Humidity": 27.0,
@@ -25,42 +28,29 @@ class SensorData(BaseModel):
             }
         }
 
-app = FastAPI(
-    title="Occupancy Detection API",
-    description="Predicts occupancy using sensor data",
-    version="1.0"
-)
-
-# Load model + scaler
-model = joblib.load('model.pkl')
-scaler = joblib.load('scaler.pkl')
-features = joblib.load('features.pkl')
 
 @app.get("/")
 def home():
     return {"message": "Occupancy Prediction API is running."}
 
+
 @app.post("/predict")
-def predict(data: SensorData):
+def predict_api(data: SensorData):
 
-    input_dict = data.dict()   # This is already correct
+    # Convert request into dictionary
+    input_dict = data.model_dump()
 
-    # Create df for debugging or logging (optional)
-    df = pd.DataFrame([input_dict])
-
-    # FIX: pass dictionary, not df
-    X = preprocess_input(input_dict, features, scaler)
-
-    pred = make_prediction(model, X)
+    # Call your unified prediction function
+    result = predict(input_dict)
 
     return {
         "input": input_dict,
-        "prediction": int(pred[0]),
-        "occupancy": "Occupied" if pred[0] == 1 else "Not Occupied"
+        "occupancy_prediction": result["occupancy_prediction"],
+        "occupancy_probability": result["occupancy_probability"],
+        "status": "Occupied" if result["occupancy_prediction"] == 1 else "Not Occupied"
     }
 
 
-# Add this to run directly
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8005)
+    uvicorn.run(app, host="127.0.0.1", port=8000)
