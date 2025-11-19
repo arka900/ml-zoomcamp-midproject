@@ -1,30 +1,43 @@
+Here’s a clean, professional **README.md template** tailored exactly for your project and matching the style of the repo you linked — but **much better organized** and specific to *your occupancy detection project*.
+
+You can copy-paste this directly into your README.md.
 
 ---
 
-# ✅ **README Instructions (Copy-Paste Ready)**
+# 🏠 Occupancy Detection – ML Zoomcamp Midterm Project
 
-# 🏠 Occupancy Prediction API
+This project predicts whether a room is **occupied** based on environmental sensor readings such as temperature, humidity, CO₂ levels, and light intensity.
 
-This project trains classifier models on the UCI Occupancy Detection dataset and exposes it as a REST API using **FastAPI**.
-The project includes training, artifact generation, and full Docker deployment.
+It includes:
+
+* A full **machine learning pipeline**
+* A **FastAPI** deployment
+* A **Dockerized API** for easy reproduction
+* Clean modular code (`preprocess.py`, `predict.py`)
+* Pickled model artifacts
 
 ---
 
+## 📁 Project Structure
 
-# 🚀 **How to Replicate This Project**
-
-## **1️⃣ Clone the Repository**
-
-```bash
-git clone <your-repo-url>
-cd ml-zoomcamp-midproject
+```
+ml-zoomcamp-midproject/
+│
+├── preprocess.py          # Training & preprocessing pipeline
+├── predict.py             # Load model + return predictions
+├── main.py                # FastAPI app
+├── environment.yaml       # Conda environment
+├── features.pkl           # Feature order for prediction
+├── model.pkl              # Trained ML model
+├── scaler.pkl             # StandardScaler
+├── Dockerfile             # Containerization
+├── test_data.json         # Sample payload
+└── README.md
 ```
 
 ---
 
-# **2️⃣ Create the Conda Environment (Optional for Local Dev)**
-
-If you want to run everything locally:
+## 📦 1. Create the Conda Environment
 
 ```bash
 conda env create -f environment.yaml
@@ -33,126 +46,110 @@ conda activate midproject
 
 ---
 
-# **3️⃣ Train the Model and Generate Artifacts**
+## 🧠 2. Train the Model (Optional)
 
-Run:
+If you want to retrain the model:
 
 ```bash
-python train.py
+python preprocess.py
 ```
 
-This will create:
+This will generate:
+
+* `model.pkl`
+* `scaler.pkl`
+* `features.pkl`
+
+These files are **ignored by Git** using `.gitignore`:
 
 ```
-model.pkl
-scaler.pkl
-features.pkl
+*.pkl
 ```
-
-These files are automatically loaded by the FastAPI app.
 
 ---
 
-# **4️⃣ Run the API Locally (without Docker)**
+## 🔮 3. Make Predictions Locally
+
+You can test prediction directly in Python:
+
+```bash
+python predict.py
+```
+
+Or import the function:
+
+```python
+from predict import predict
+
+sample = {
+    "Temperature": 23.5,
+    "Humidity": 27.2,
+    "Light": 450,
+    "CO2": 950,
+    "HumidityRatio": 0.004
+}
+
+print(predict(sample))
+```
+
+---
+
+## ⚡ 4. Run the FastAPI App Locally
 
 ```bash
 uvicorn main:app --reload
 ```
 
-Then open:
+Open the browser:
 
-```
-http://127.0.0.1:8000/docs
-```
+* API root: **[http://127.0.0.1:8000](http://127.0.0.1:8000)**
+* Docs UI: **[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)**
 
-You’ll see Swagger UI where you can test predictions.
+Use the POST `/predict` endpoint.
 
 ---
 
-# **5️⃣ Build the Docker Image**
+## 🐳 5. Build & Run the Docker Image
 
-Make sure **Docker Desktop is running**, then run:
+### **Build the image**
 
 ```bash
 docker build -t occupancy-api .
 ```
 
----
-
-# **6️⃣ Run the Container**
+### **Run the container**
 
 ```bash
 docker run -p 8000:8000 occupancy-api
 ```
 
-The API is now available at:
+API will be available at:
 
 ```
+http://127.0.0.1:8000
 http://127.0.0.1:8000/docs
 ```
 
 ---
 
-# **7️⃣ Making Predictions**
+## 🧪 6. Example API Payload
 
-### POST `/predict`
-
-Example JSON:
+`test_data.json`:
 
 ```json
 {
-  "Temperature": 23.18,
-  "Humidity": 27.20,
-  "Light": 426.0,
-  "CO2": 721.25,
-  "HumidityRatio": 0.0048
+  "Temperature": 23.5,
+  "Humidity": 27.2,
+  "Light": 450,
+  "CO2": 950,
+  "HumidityRatio": 0.004
 }
 ```
 
-Response:
-
-```json
-{
-  "prediction": 1,
-  "label": "Occupied"
-}
-```
-
----
-
-# 🧪 **8️⃣ Re-training with Modified Model**
-
-Simply re-run:
+Use with curl:
 
 ```bash
-python train.py
+curl -X POST http://127.0.0.1:8000/predict \
+     -H "Content-Type: application/json" \
+     -d @test_data.json
 ```
-
-Artifacts will update and Docker will use them on next build.
-
----
-
-# 📄 **9️⃣ .gitignore Notes**
-
-To avoid committing large or sensitive files, your `.gitignore` should include:
-
-```
-model.pkl
-scaler.pkl
-features.pkl
-__pycache__/
-```
-
----
-
-# 🎯 **10️⃣ Summary**
-
-| Step | Action                           |
-| ---- | -------------------------------- |
-| 1    | Clone the repo                   |
-| 2    | Create Conda environment         |
-| 3    | Train the model & save artifacts |
-| 4    | Run API locally using FastAPI    |
-| 5    | Build Docker image               |
-| 6    | Run container                    |
-| 7    | Test predictions in Swagger      |
