@@ -116,8 +116,8 @@ http://127.0.0.1:8000/docs
 
 I have used railway.app (http://railway.app) to host the docker file. 
 
-It lives on at (ml-zoomcamp-midproject-production.up.railway.app).
+It lives on at (http://ml-zoomcamp-midproject-production.up.railway.app).
 
 
-![screenshot](D:\ml-zoomcamp-midproject\screenshots\Screenshot 2025-11-20 015449.png)
+![screenshot](screenshots\Screenshot.png)
 
