@@ -119,5 +119,5 @@ I have used railway.app (http://railway.app) to host the docker file.
 It lives on at (http://ml-zoomcamp-midproject-production.up.railway.app).
 
 
-![screenshot](screenshots\Screenshot.png)
+![screenshots](screenshots\Screenshot.png)
 
